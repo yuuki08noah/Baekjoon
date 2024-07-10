@@ -23,7 +23,6 @@ int main(void) {
     stable_sort(time.begin(), time.end(), cmp);
     
     int end=0;
-    end=0;
     for(int i = 0; i<n; i++) {
         if(time[i].first>=end) {
             cnt++;
