@@ -1,49 +1,32 @@
+import decimal
 import sys
-import math
-import cmath
 
-
-def cubic_function(a, b, c, d, x):
-    return a * x ** 3 + b * x ** 2 + c * x + d
-
-
-def bisection_method(a, b, c, d, lower_bound, upper_bound, tol=1e-6):
-    def f(x):
-        return cubic_function(a, b, c, d, x)
-
-    if f(lower_bound) * f(upper_bound) >= 0:
-        raise ValueError("The bisection method fails. The function values at the endpoints must be of opposite signs.")
-
-    while (upper_bound - lower_bound) / 2.0 > tol:
-        midpoint = (lower_bound + upper_bound) / 2.0
-        f_mid = f(midpoint)
-
-        if f_mid == 0:
-            return midpoint
-        elif f(lower_bound) * f_mid < 0:
-            upper_bound = midpoint
-        else:
-            lower_bound = midpoint
-
-    return (lower_bound + upper_bound) / 2.0
-
+# 데이터 포인트
 input = sys.stdin.readline
-n, m = map(int, input().split())
-a, b, c, d = 0, 0, 0, 0
-for i in range(n):
-    t1, t2 = map(int, input().split())
-    a += -t1**3
-    b += 3*t1**2*(t2-m)
-    c += 3*(-t1)*((t2-m)**2)
-    d += (t2-m)**3
+d, b = map(int, input().split())
+x = []
+y = []
 
-# 초기 구간 설정
-lower_bound = -10
-upper_bound = 10
+Sxxx = 0
+Sxxby = 0
+Sxbyby = 0
+Sbybyby = 0
 
-# 실수 해 찾기
-try:
-    root = bisection_method(a, b, c, d, lower_bound, upper_bound)
-    print(root)
-except ValueError as e:
-    print(e)
+for i in range(d):
+    temp = list(map(int, input().split()))
+    Sxxx += temp[0]**3
+    Sxxby += (temp[0]**2)*(b-temp[1])
+    Sxbyby += temp[0]*((b-temp[1])**2)
+    Sbybyby += (b-temp[1])**3
+
+def f(x):
+    return x**3*Sxxx+3*x**2*Sxxby+3*x*Sxbyby+Sbybyby
+
+start, end = decimal.Decimal(-10**9), decimal.Decimal(10**9)
+for _ in range(1000):
+    mid = (start+end)/decimal.Decimal(2.0)
+    if f(mid)>0:
+        end = mid
+    else:
+        start = mid
+print(mid)
