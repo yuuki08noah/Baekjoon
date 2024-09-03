@@ -16,7 +16,7 @@ def bfs(que):
         x, y = queue.popleft()
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
-            if 0 <= nx < m and 0 <= ny < n and board[nx][ny] != 2:
+            if 0 <= nx < m and 0 <= ny < n:
                 if board[nx][ny] == 0:
                     board[nx][ny] += board[x][y] + 1
                     queue.append((nx, ny))
