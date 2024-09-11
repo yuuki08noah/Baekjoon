@@ -18,10 +18,10 @@ for _ in range(m):
 start, end = map(int, input().split())
 costs[start-1] = 0
 
-queue = [(start, 0)]
+queue = [(0, start)]
 def dijkstra():
     while queue:
-        node, cost = heapq.heappop(queue)
+        cost, node = heapq.heappop(queue)
 
         if cost > costs[node-1]:
             continue
@@ -30,6 +30,6 @@ def dijkstra():
             for next_node, weight in table[node]:
                 if weight + cost < costs[next_node-1]:
                     costs[next_node-1] = weight + cost
-                    heapq.heappush(queue, (next_node, costs[next_node-1]))
+                    heapq.heappush(queue, (costs[next_node-1], next_node))
 dijkstra()
 print(costs[end-1])
