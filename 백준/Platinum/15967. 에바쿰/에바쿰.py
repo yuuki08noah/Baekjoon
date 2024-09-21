@@ -73,7 +73,7 @@ class SegTree:
 
         left_value = self.update_range(left, right, value, node * 2, start, mid)
         right_value = self.update_range(left, right, value, node * 2 + 1, mid + 1, end)
-        self.seg_tree[node] += self.merge(left_value, right_value)
+        self.seg_tree[node] = self.merge(left_value, right_value)
         return self.seg_tree[node]
 
     def push_down(self, value, node, start, end):
