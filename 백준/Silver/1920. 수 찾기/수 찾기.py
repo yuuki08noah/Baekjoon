@@ -8,17 +8,15 @@ m = int(input())
 find = list(map(int, input().split()))
 
 def binary_search(target, start, end):
-    mid = (start + end) // 2
-    if arr[mid] == target:
-        return True
-
-    if start > end:
-        return False
-
-    if arr[mid] > target:
-        return binary_search(target, start, mid - 1)
-    else:
-        return binary_search(target, mid + 1, end)
+    while start <= end:
+        mid = (start + end) // 2
+        if arr[mid] == target:
+            return True
+        if arr[mid] > target:
+            end = mid - 1
+        else:
+            start = mid + 1
+    return False
 
 for i in find:
     print(int(binary_search(i,0, n - 1)))
