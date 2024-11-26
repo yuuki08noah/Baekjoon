@@ -17,15 +17,11 @@ for _ in range(t):
 
     for node in graph.keys():
         if not color[node] and flag:
-            queue = deque()
-            queue.append((node, 'red'))
+            queue = deque([(node, 'red')])
 
             while queue and flag:
                 x, c = queue.popleft()
                 if color[x]:
-                    if color[x] != c:
-                        flag = False
-                        break
                     continue
                 color[x] = c
                 for vertex in graph[x]:
