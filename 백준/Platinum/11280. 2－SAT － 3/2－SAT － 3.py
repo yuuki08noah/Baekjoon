@@ -1,8 +1,8 @@
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 sys.setrecursionlimit(10**6)
+
 def dfs(n):
     global num
     for vertex in graph[n]:
@@ -12,13 +12,12 @@ def dfs(n):
     numbers[n][0] = num
     num += 1
 
-def dfs2nd(n, li):
+def dfs2nd(n):
     group[n] = p
-    li.append(n)
     for vertex in graph_inversed[n]:
         if not visited_inversed[vertex]:
             visited_inversed[vertex] = True
-            dfs2nd(vertex, li)
+            dfs2nd(vertex)
 
 
 v, e = map(int, input().split())
@@ -28,7 +27,6 @@ visited = {i:False for i in range(-v, v+1)}
 visited_inversed = {i:False for i in range(-v, v+1)}
 numbers = {i:[0, i] for i in range(-v, v + 1)}
 group = [0] * (2*v + 1)
-inDegree = [0] * (2*v + 1)
 num = 1
 p = 0
 
@@ -47,14 +45,11 @@ for i in range(-v, v + 1):
 
 por = sorted(numbers.values(), key = lambda x:x[0], reverse = True)
 
-re = []
 for i in por:
     if i[1] == 0: continue
     if not visited_inversed[i[1]]:
         visited_inversed[i[1]] = True
-        r = []
-        dfs2nd(i[1], r)
-        re.append(r)
+        dfs2nd(i[1])
         p += 1
 
 flag = 1
