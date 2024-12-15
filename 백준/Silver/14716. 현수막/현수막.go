@@ -48,10 +48,8 @@ func dfs(x int, y int) {
 	for i := 0; i < 8; i++ {
 		nx := x + dx[i]
 		ny := y + dy[i]
-		if (0 <= nx && nx < n) && (0 <= ny && ny < m) {
-			if graph[nx][ny] == 1 {
-				dfs(nx, ny)
-			}
+		if (0 <= nx && nx < n) && (0 <= ny && ny < m) && graph[nx][ny] == 1 {
+            dfs(nx, ny)
 		}
 	}
 }
