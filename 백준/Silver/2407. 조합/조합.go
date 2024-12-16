@@ -8,7 +8,7 @@ import (
 )
 
 var n, m int
-var dp [101][101]*big.Int
+var fac = []*big.Int{big.NewInt(1), big.NewInt(1)}
 
 func main() {
 	var reader = bufio.NewReader(os.Stdin)
@@ -17,23 +17,12 @@ func main() {
 
 	fmt.Fscanln(reader, &n, &m)
 
-	for i := 1; i <= n; i++ {
-		for j := 1; j <= m && j <= i; j++ {
-			if i == j {
-				dp[i][j] = big.NewInt(int64(1))
-				continue
-			}
-			if j == 1 {
-				dp[i][j] = big.NewInt(int64(i))
-				continue
-			}
-
-			dp[i][j] = new(big.Int).Add(dp[i-1][j], dp[i-1][j-1])
-		}
+	if n < m {
+		fmt.Fprintln(writer, "1")
+		return
 	}
-	if dp[n][m].Cmp(big.NewInt(1)) < 0 {
-		fmt.Fprintln(writer, 1)
-	} else {
-		fmt.Fprintln(writer, dp[n][m])
+	for i := 2; i <= n; i++ {
+		fac = append(fac, new(big.Int).Mul(fac[i-1], big.NewInt(int64(i))))
 	}
+	fmt.Fprintln(writer, new(big.Int).Quo(fac[n], new(big.Int).Mul(fac[n-m], fac[m])))
 }
