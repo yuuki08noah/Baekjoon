@@ -1,15 +1,15 @@
+import bisect
 import sys
 from collections import deque
 
 input = sys.stdin.readline
 n = int(input())
-arr = list(map(int, input().split()))
-arr.sort()
+arr = deque(sorted(map(int, input().split())))
 res = 0
 while len(arr) != 1:
     max_value = arr.pop()
-    min_value = arr.pop(0)
+    min_value = arr.popleft()
     res += max_value * min_value
-    arr.append(max_value + min_value)
-    arr.sort()
+    arr.insert(bisect.bisect_left(arr, max_value + min_value), max_value+min_value)
+
 print(res)
