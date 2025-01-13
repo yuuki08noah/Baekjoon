@@ -1,30 +1,31 @@
-import math
 import sys
 
-def m_m(arr, tp):
-    res = []
-    for i in range(len(arr)):
-        temp = []
-        for j in range(len(arr)):
-            sum = 0
-            for k in range(len(arr[i])):
-                sum += tp[i][k] * arr[k][j]
-            temp.append(sum%1000000007)
-        res.append(temp)
-    return res
+class Matrix:
+    def __init__(self, matrix):
+        self.matrix = matrix
 
-def power(base, exponent):
-    if exponent <= 1:
-        return base
-    elif (exponent % 2) == 1 and exponent > 1:
-        temp = power(base, (exponent - 1) // 2)
-        return m_m(m_m(temp, temp), base)
-    else:
-        temp = power(base, exponent // 2)
-        return m_m(temp, temp)
+    def __mul__(self, other):
+        res_matrix = Matrix([0 for _ in range(len(other.matrix[0]))])
+        for i in range(len(self.matrix)):
+            temp = [0] * len(other.matrix[0])
+            for j in range(len(other.matrix[0])):
+                value = 0
+                for k in range(len(other.matrix)):
+                    value += self.matrix[i][k] * other.matrix[k][j]
+                temp[j] = value % (10**9+7)
+            res_matrix.matrix[i] = temp
+        return res_matrix
 
-if __name__ == "__main__":
-    arr = [[1, 1], [1, 0]]
-    m = int(sys.stdin.readline())
-    res = power(arr, m)
-    print(res[0][1]%1000000007)
+    def __pow__(self, exp):
+        if exp == 1:
+            return self
+        elif exp % 2 == 0:
+            temp = self ** (exp // 2)
+            return temp * temp
+        else:
+            temp = self ** (exp // 2)
+            return self * temp * temp
+
+fib = Matrix([[1, 1], [1, 0]])
+input = sys.stdin.readline
+print((fib ** int(input())).matrix[0][1])
