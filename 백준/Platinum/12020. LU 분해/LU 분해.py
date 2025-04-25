@@ -26,13 +26,9 @@ try:
         if U[i][i] == 0:
             print(-1)
             exit()
-    for i in range(n):
-        for j in range(n):
-            print(f"{L[i][j]:.3f}", end=' ')
-        print()
-    for i in range(n):
-        for j in range(n):
-            print(f"{U[i][j]:.3f}", end=' ')
-        print()
+    for row in L:
+        print(' '.join(f"{elem:.3f}" for elem in row))
+    for row in U:
+        print(' '.join(f"{elem:.3f}" for elem in row))
 except ZeroDivisionError:
     print("-1")
