@@ -1,5 +1,6 @@
 from copy import copy
 from typing import List
+import sys
 
 class Node:
     val: int
@@ -67,6 +68,7 @@ class DynamicSegmentTree:
             return self.get_nth(node.right, mid+1, end, nth)
         return self.get_nth(node.left, start, mid, nth-right_val)
 
+input = sys.stdin.readline
 n, m = map(int, input().split())
 arr = list(map(int, input().split()))
 MAX = 10**18
